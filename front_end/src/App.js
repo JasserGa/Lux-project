@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import AllProducts from './components/allProduct.jsx';
-
+// import ProductDetail from './components/details.jsx';
 
 function App() {
   const handleProductClick = (product) => {

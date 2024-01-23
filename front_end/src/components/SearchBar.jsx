@@ -8,12 +8,12 @@ const SearchBar = ({ onSearch, allProducts }) => {
   };
 
   const handleSearch = () => {
-    // Perform search locally without making an additional request
+
     const results = allProducts.filter((product) =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    // Now, you can pass the filtered items back to the parent component
+  
     onSearch(results);
   };
 

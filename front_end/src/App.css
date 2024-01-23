@@ -143,7 +143,7 @@ transform: scale(20%);
   background-color: #ffffff; 
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6); 
   margin-bottom: 20px;
 }
 
@@ -217,7 +217,7 @@ body{
   color: #e6e9ec; 
 }
 .navbar {
-  background-color: #3498db;
+  background-color: rgba(0, 0, 0, 0.1);
   color: #fff;
   padding: 15px;
   text-align: center;
@@ -355,6 +355,45 @@ body{
 .add-new-car button:hover {
   background-color: #2980b9;
 }
-body{
-  background-color: #cf8753;
+.add-product-section {
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.add-product-section h2 {
+  color: #beafaf;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.add-product-section label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.add-product-section input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.add-product-section button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.add-product-section button:hover {
+  background-color: #45a049;
+}
+label{color: #ccc;}

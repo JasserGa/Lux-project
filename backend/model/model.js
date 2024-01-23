@@ -1,7 +1,7 @@
 const connection =require('../database Mysql/index.js')
 
 const getAll=(callback)=>{
-    const query='SELECT * FROM product'
+    const query='SELECT * FROM products'
     connection.query(query,(err,result)=>{
         if(err){
             callback(err,null)
@@ -12,7 +12,7 @@ const getAll=(callback)=>{
 }
 
 const getOne=(id,callback)=>{
-    const query='SELECT * FROM product WHERE id=?'
+    const query='SELECT * FROM products WHERE id=?'
     connection.query(query,[id],(err,result)=>{
         if(err){
             callback(err,null)
@@ -25,19 +25,20 @@ const getOne=(id,callback)=>{
         }
     })
 }
-const create=(productData,callback)=>{
-    const{name,category,price,imageUrl}=productData
-    const query='INSERT INTO product (id, name, imageUrl, price, rating, popular, available)VALUES (?,?,?,?,?,?,?)'
-    connection.query(query,[id,name, imageUrl, price, rating, popular, available],(err,result)=>{
-        if(err){
-            callback(err,null)
-        }else{
-            callback(null,result)
-        }
-    })
-}
+const create = (productData, callback) => {
+    const { name, image, price, popular, available, rating } = productData;
+    const query = 'INSERT INTO products (name, image, price, popular, available, rating) VALUES (?, ?, ?, ?, ?, ?)';
+  
+    connection.query(query, [name, image, price, popular, available, rating], (err, result) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, result);
+      }
+    });
+  };
 const remove=(productId,callback)=>{
-    const query='DELETE FROM product WHERE id=?'
+    const query='DELETE FROM products WHERE id=?'
     connection.query(query,[productId],(err)=>{
         if(err){
             callback(err)
@@ -47,9 +48,9 @@ const remove=(productId,callback)=>{
     })
 }
 const update=(productId,productData,callback)=>{
-    const {name,category,price,imageUrl}=productData
-    const query='UPDATE product SET name=?,imageUrl=?, price=?, rating=?,popular=?, available=? WHERE id=?'
-    connection.query(query,[name,category,price,imageUrl,productId],(err,result)=>{
+    const {name,price,image}=productData
+    const query='UPDATE products SET name=?,image=?, price=? WHERE id=?'
+    connection.query(query,[name,image,price,productId],(err,result)=>{
         if(err){
             callback(err,null)
         }else{

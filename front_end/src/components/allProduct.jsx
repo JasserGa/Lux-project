@@ -3,10 +3,9 @@ import axios from 'axios';
 import SearchBar from './SearchBar';
 
 const AllProducts = ({ onProductClick }) => {
-  const [favorites, setFavorites] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
-  const [newCarData, setNewCarData] = useState({
+  const [newProductData, setNewProductData] = useState({
     name: '',
     image: '',
     price: 0,
@@ -25,17 +24,12 @@ const AllProducts = ({ onProductClick }) => {
       });
   }, []);
 
-  const addToFavorites = (product) => {
-    setFavorites((prevFavorites) => [...prevFavorites, product]);
-    alert('Product added to favorites successfully!');
-  };
-
   const handleSearch = (query) => {
     setSearchResults(query);
   };
 
   const handleDelete = (productId) => {
-    axios.delete(`http://localhost:5001/api/products/getAll/${productId}`)
+    axios.delete(`http://localhost:5001/api/products/delete/${productId}`)
       .then(response => {
         setAllProducts(response.data);
         alert(`Product with ID: ${productId} deleted successfully`);
@@ -46,11 +40,9 @@ const AllProducts = ({ onProductClick }) => {
   };
 
   const handleUpdate = (productId) => {
-    // Implement your update logic here
-    // For now, let's prompt for a new price
     const newPrice = prompt('Enter the new price:');
     if (newPrice !== null && !isNaN(newPrice)) {
-      axios.put(`hhttp://localhost:5001/api/products/getAll/${productId}`, { price: newPrice })
+      axios.put(`http://localhost:5001/api/products/update/${productId}`, { price: newPrice })
         .then(response => {
           setAllProducts(response.data);
           alert(`Product with ID: ${productId} updated successfully to new price: ${newPrice}`);
@@ -63,21 +55,39 @@ const AllProducts = ({ onProductClick }) => {
     }
   };
 
-
-
+  const handleAddProduct = () => {
+    axios.post('http://localhost:5001/api/products/add', newProductData)
+      .then(response => {
+        setAllProducts(response.data);
+        alert('Product added successfully!');
+        // Clear the input fields after adding the product
+        setNewProductData({
+          name: '',
+          image: '',
+          price: 0,
+          popular: false,
+          available: false,
+          rating: 0,
+        });
+      })
+      .catch(error => {
+        console.error('Error adding product:', error);
+        alert('Error adding product. Check console for details.');
+      });
+  };
   
 
   return (
     <div>
       <nav className="navbar">
-        <h1 id='web'>LUXURY PRODUCTS</h1>
+        <h1 id='web'>BRUCE WAYNE SHOP</h1>
         <div className="navbar-links">
-          <a href="https://www.mansory.com/">More</a>
-          <a href="">Contact Us</a>
-          <a href="https://www.mansory.com/news">News</a>
+          <a href="https://www.rolls-roycemotorcars.com/en_GB/home.html">MORE</a>
+          <a href="https://www.instagram.com/jesser__ga/">CONTACT US</a>
+          <a href="https://www.luxurymainerentals.com/property/281-beach-avenue-4">MAINSON</a>
         </div>
       </nav>
-       
+
       <SearchBar onSearch={handleSearch} allProducts={allProducts} />
       <div className="all-product">
         {(searchResults.length > 0 ? searchResults : allProducts).map((product) => (
@@ -117,11 +127,40 @@ const AllProducts = ({ onProductClick }) => {
             >
               Update
             </button>
-            <button onClick={() => addToFavorites(product)}>
-              Add to Favorites
-            </button>
           </div>
         ))}
+      </div>
+
+      {/* Add a section to input new product data */}
+      <div className="add-product-section">
+        <h2>Add New Product</h2>
+        <label htmlFor="newProductName">Name:</label>
+        <input
+          type="text"
+          id="newProductName"
+          value={newProductData.name}
+          onChange={(e) => setNewProductData({ ...newProductData, name: e.target.value })}
+        />
+
+        <label htmlFor="newProductImage">Image URL:</label>
+        <input
+          type="text"
+          id="newProductImage"
+          value={newProductData.image}
+          onChange={(e) => setNewProductData({ ...newProductData, image: e.target.value })}
+        />
+
+        <label htmlFor="newProductPrice">Price:</label>
+        <input
+          type="number"
+          id="newProductPrice"
+          value={newProductData.price}
+          onChange={(e) => setNewProductData({ ...newProductData, price: e.target.value })}
+        />
+
+        {/* Add more input fields for other properties of the new product */}
+
+        <button onClick={handleAddProduct}>Add Product</button>
       </div>
     </div>
   );
